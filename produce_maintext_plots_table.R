@@ -1,11 +1,11 @@
-# -------- load the libray --------#
-#Install required packages ----
+# -------- install required libraries --------#
 #install.packages("crossnma")
-#install.packages("ggplot2")
-#install.packages("dplyr")
 #install.packages("metafor")
+#install.packages("dplyr")
+#install.packages("ggplot2")
 #install.packages("coda")
 
+# -------- load libraries --------#
 library(crossnma)
 library(metafor) # for fig2: forest plot
 library(dplyr) # for fig2
@@ -27,19 +27,20 @@ load("output/RRMS/JAGS/jagsfit_RRMS_prior.RData") # has jagsfit.prior
 load("output/antidepressant/JAGS/jagsfit_antidep_main_after_revision.RData") # jags output
 load("output/antidepressant/JAGS/jagsfit_antidep_sens.RData") # Table 4
 load("output/antidepressant/JAGS/jagsfit_antidep_down_weight.RData") # Table 4
+
 # Figure 1: network plot
 
 # a. RRMS
 mod_rct <- crossnma.model(prt.data=myprt.data[myprt.data$design!="nrs",],
-                               std.data=mystd.data,
-                               trt=treat,
-                               study=study,
-                               outcome=r,
-                               n=n,
-                               design=design,
-                               reference='Placebo',
-                               trt.effect='common',
-                               method.bias = 'naive') ## needed to create netplot for only RCTs to be able to add manually dashed lines to represent the NRS evidence 
+                          std.data=mystd.data,
+                          trt=treat,
+                          study=study,
+                          outcome=r,
+                          n=n,
+                          design=design,
+                          reference='Placebo',
+                          trt.effect='common',
+                          method.bias = 'naive') ## needed to create netplot for only RCTs to be able to add manually dashed lines to represent the NRS evidence 
 #par(family = "Arial")
 netgraph(mod_rct,
         start = "prcomp",scale=0.8,
@@ -60,24 +61,21 @@ netgraph(mod_rct,
 gris <- read.csv("data/antidepressant/final data/antidepressant_for_main_analysis")
 
 mod_antidep <- crossnma.model(prt.data=NULL,
-                               std.data=gris,
-                               trt=drug,
-                               study=study,
-                               outcome=r,
-                               n=n,
-                               design=design,
-                               reference="Plac",
-                               trt.effect="random",
-                               method.bias = "naive")
+                              std.data=gris,
+                              trt=drug,
+                              study=study,
+                              outcome=r,
+                              n=n,
+                              design=design,
+                              reference="Plac",
+                              trt.effect="random",
+                              method.bias = "naive")
 netgraph(mod_antidep, 
-        cex=1.25,
-        plastic = FALSE, thickness = "se.f", number = FALSE,
-        points = TRUE, cex.points = 7, col.points = "darkred",
-        multiarm = FALSE,
-        col='grey',
-        bg.number.of.studies =NULL,
-        col.number.of.studies = 'black'
-        )
+         plastic = FALSE, thickness = "se.c",
+         points = TRUE, cex.points = 7, col.points = "darkred",
+         multiarm = FALSE,
+         cex=1.25, col='grey'
+         )
 
 # Figure 2: forest plot of OR (PL vs NZ, GA, DF) using 3 different methods of estimation
 load("output/RRMS/JAGS/jagsfit_rrms_NMA_dic.RData") # 
@@ -97,25 +95,24 @@ antidep_forestplot(jagsfit_antidep_main_R, gris)
 
 # Table 3
 
-#** For each study, find
-# assigned treatments 
+#** For each study, find assigned treatments
 table(myprt.data$study, myprt.data$treat)
 table(mystd.data$study, mystd.data$treat)
 # number of relapsed patients 
-myprt.data%>% group_by(study) %>% summarise_at("r", sum)
-mystd.data%>% group_by(study) %>% summarise_at("r", sum)
+myprt.data %>% group_by(study) %>% summarise_at("r", sum)
+mystd.data %>% group_by(study) %>% summarise_at("r", sum)
 
 # sample size
-myprt.data%>% count(study) 
-mystd.data%>% group_by(study) %>% summarise_at("n", sum)
+myprt.data %>% count(study) 
+mystd.data %>% group_by(study) %>% summarise_at("n", sum)
 
 # bias 
-myprt.data%>% group_by(study, bias) %>% group_keys()
-mystd.data%>% group_by(study, bias) %>% group_keys()
+myprt.data %>% group_by(study, bias) %>% group_keys()
+mystd.data %>% group_by(study, bias) %>% group_keys()
 
 # mean age
-myprt.data%>% group_by(study) %>% summarise_at("age", mean)
-mystd.data%>% group_by(study) %>% summarise_at("age", mean)
+myprt.data %>% group_by(study) %>% summarise_at("age", mean)
+mystd.data %>% group_by(study) %>% summarise_at("age", mean)
 
 
 # Table 4
@@ -220,8 +217,3 @@ pD.ad.adjust2 <- length(unique(rrms_ad$id))+length(unique(rrms_ad$treat))-1+1+2+
 # DIC
 dic.ipd.adjust2 <- totresdev.ipd.adj2+pD.ipd.adjust2
 dic.ad.adjust2<- totresdev.ad.adj2+pD.ad.adjust2
-
-
-
-
-

@@ -1,6 +1,10 @@
-# -------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+# -------- install required libraries --------#
+#install.packages("crossnma")
+#install.packages("metafor")
+#install.packages("dplyr")
+#install.packages("ggplot2")
 
+# -------- load libraries --------#
 library(crossnma)
 library(metafor) # for fig2: forest plot
 library(dplyr) # for fig2
@@ -12,7 +16,7 @@ mystd.data <- read.csv("data/RRMS/final data/rrms_final_AD")
 
 #-------- load JAGS output --------#
 
-#** RRMS 
+#** RRMS
 load("output/RRMS/JAGS/jagsfit_rrms_NMA.RData") # has jagsfit_rrms_NMA
 load("output/RRMS/JAGS/jagsfit_rrms_adjust1_NMR_age.RData") # has jagsfit_rrms_adjust1_NMR_age
 load("output/RRMS/JAGS/jagsfit_RRMS_prior.RData") # has jagsfit.prior
@@ -45,6 +49,3 @@ lines(jagsfit_antidep_main[[2]]$samples[[1]][,'g.act'],col=2)
 # Sensitivity analysis: mean bias effect g_p and  g_act from adjust1 and adjust2
 summary(jagsfit_antidep_sens[[1]]) # adjust1, q=0.25
 summary(jagsfit_antidep_sens[[2]]) # adjust2, q=0.25
-
-# 3 and 4 in the list (jagsfit_antidep_sens) for q=0.8
-
