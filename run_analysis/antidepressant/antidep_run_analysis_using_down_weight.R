@@ -9,7 +9,7 @@
 # 4. bias-adjust2 with q=0.8  "Additional analysis with q"
 
 #-------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#devtools::install_github("htx-r/crossnma",force = TRUE)
 library(crossnma)
 
 #-------- data --------#
@@ -27,25 +27,25 @@ n.chains=2
 #** 1. bias-adjust1 with q=0.25
 # jags model: code+data
 mod_adjust1_q1 <- crossnma.model(prt.data=NULL,
-                                   std.data=gris,
-                                   trt=c('drug'),
-                                   study=c('study'),
-                                   outcome='r',
-                                   n='n',
-                                   design=c('design'),
-                                   reference='Plac',
-                                   trt.effect='random',
-                                   #---------- bias adjustment ----------
-                                   method.bias='adjust1',
-                                   bias=c('rob'),
-                                   down.wgt=0.25,
-                                   unfav=c("unfav"),
-                                   bias.group = "bias.group",
-                                   bias.type='add',
-                                   bias.effect='random')
+                                 std.data=gris,
+                                 trt=drug,
+                                 study=study,
+                                 outcome=r,
+                                 n=n,
+                                 design=design,
+                                 reference='Plac',
+                                 trt.effect='random',
+                                 #---------- bias adjustment ----------
+                                 method.bias='adjust1',
+                                 bias=rob,
+                                 down.wgt=0.25,
+                                 unfav=unfav,
+                                 bias.group = bias.group,
+                                 bias.type='add',
+                                 bias.effect='random')
 
 # run jags
-fit_adjust1_q1 <- crossnma.run(model=mod_adjust1_q1,
+fit_adjust1_q1 <- crossnma(mod_adjust1_q1,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
@@ -57,25 +57,25 @@ fit_adjust1_q1 <- crossnma.run(model=mod_adjust1_q1,
 # jags model: code+data
 mod_adjust1_q2 <- crossnma.model(prt.data=NULL,
                                  std.data=gris,
-                                 trt=c('drug'),
-                                 study=c('study'),
-                                 outcome='r',
-                                 n='n',
-                                 design=c('design'),
+                                 trt=drug,
+                                 study=study,
+                                 outcome=r,
+                                 n=n,
+                                 design=design,
                                  reference='Plac',
                                  trt.effect='random',
                                  #---------- bias adjustment ----------
                                  method.bias='adjust1',
-                                 bias=c('rob'),
+                                 bias=rob,
                                  down.wgt=0.8,
-                                 unfav=c("unfav"),
-                                 bias.group = "bias.group",
+                                 unfav=unfav,
+                                 bias.group = bias.group,
                                  bias.type='add',
                                  bias.effect='random')
 
 
 # run jags
-fit_adjust1_q2 <- crossnma.run(model=mod_adjust1_q2,
+fit_adjust1_q2 <- crossnma(mod_adjust1_q2,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
@@ -85,53 +85,53 @@ fit_adjust1_q2 <- crossnma.run(model=mod_adjust1_q2,
 #** 3. bias-adjust2 with q=0.25
 mod_adjust2_q1 <- crossnma.model(prt.data=NULL,
                        std.data=gris,
-                       trt=c('drug'),
-                       study=c('study'),
-                       outcome=c('r'),
-                       n='n',
-                       design=c('design'),
+                       trt=drug,
+                       study=study,
+                       outcome=r,
+                       n=n,
+                       design=design,
                        reference='Plac',
                        trt.effect='random',
                        #---------- bias adjustment ----------
                        method.bias='adjust2',
-                       bias=c('rob'),
+                       bias=rob,
                        down.wgt=0.25,
-                       unfav=c("unfav"),
-                       bias.group = "bias.group",
+                       unfav=unfav,
+                       bias.group = bias.group,
                        bias.effect='random')
 
 
 
 # run jags
-fit_adjust2_q1 <- crossnma.run(model=mod_adjust2_q1,
+fit_adjust2_q1 <- crossnma(mod_adjust2_q1,
                          n.adapt = n.adapt,
                          n.iter=n.iter,
                          n.burnin = n.burnin,
                          thin=thin,
                          n.chains=n.chains,
                          monitor="g.act")
-#** 3. bias-adjust2 with q=0.8
+#** 4. bias-adjust2 with q=0.8
 mod_adjust2_q2 <- crossnma.model(prt.data=NULL,
                                  std.data=gris,
-                                 trt=c('drug'),
-                                 study=c('study'),
-                                 outcome=c('r'),
-                                 n='n',
-                                 design=c('design'),
+                                 trt=drug,
+                                 study=study,
+                                 outcome=r,
+                                 n=n,
+                                 design=design,
                                  reference='Plac',
                                  trt.effect='random',
                                  #---------- bias adjustment ----------
                                  method.bias='adjust2',
-                                 bias=c('rob'),
+                                 bias=rob,
                                  down.wgt=0.8,
-                                 unfav=c("unfav"),
-                                 bias.group = "bias.group",
+                                 unfav=unfav,
+                                 bias.group = bias.group,
                                  bias.effect='random')
 
 
 
 # run jags
-fit_adjust2_q2 <- crossnma.run(model=mod_adjust2_q2,
+fit_adjust2_q2 <- crossnma(mod_adjust2_q2,
                                n.adapt = n.adapt,
                                n.iter=n.iter,
                                n.burnin = n.burnin,

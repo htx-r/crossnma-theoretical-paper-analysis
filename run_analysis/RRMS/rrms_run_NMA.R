@@ -107,6 +107,28 @@ fit_adjust2 <- crossnma.run(model=mod_adjust2,
                          n.chains=n.chains,
                          monitor="LOR")
 
+#** 4. unadjusted with only RCT
+# jags model: code+data
+mod_unadjust <- crossnma.model(prt.data=myprt.data,
+                               std.data=mystd.data,
+                               trt='treat',
+                               study='study',
+                               outcome='r',
+                               n='n',
+                               design='design',
+                               reference='Placebo',
+                               trt.effect='common',
+                               method.bias = 'naive'
+)
+
+# run jags
+fit_unadjust <- crossnma.run(model=mod_unadjust,
+                             n.adapt = n.adapt,
+                             n.iter=n.iter,
+                             n.burnin = n.burnin,
+                             thin=thin,
+                             n.chains=n.chains,
+                             monitor="LOR")
 #== SAVE output
 jagsfit_rrms_NMA <- list(fit_unadjust,fit_adjust1,fit_adjust2)
 save(jagsfit_rrms_NMA,file = "output/RRMS/JAGS/jagsfit_rrms_NMA.RData")

@@ -1,5 +1,6 @@
 # -------- load the libray --------#
 devtools::install_github("htx-r/crossnma",force = TRUE)
+
 library(crossnma)
 library(metafor) # for fig2: forest plot
 library(dplyr) # for fig2
@@ -35,7 +36,12 @@ summary(jagsfit_rrms_adjust1_NMR_age)
 # Main analysis: mean bias effect g_p and  g_act from adjust1 and adjust2
 summary(jagsfit_antidep_main[[2]]) # adjust1
 summary(jagsfit_antidep_main[[3]]) # adjust2
+plot(jagsfit_antidep_main[[2]])
+plot(jagsfit_antidep_main[[2]]$samples[[2]][,'g'], type = "l",ylim=c(-0.4,0.4))
+lines(jagsfit_antidep_main[[2]]$samples[[1]][,'g'],col=2)
 
+FE_NMA_binomial_probitplot(jagsfit_antidep_main[[2]]$samples[[2]][,'g.act'], type = "l",ylim=c(-0.4,0.4))
+lines(jagsfit_antidep_main[[2]]$samples[[1]][,'g.act'],col=2)
 # Sensitivity analysis: mean bias effect g_p and  g_act from adjust1 and adjust2
 summary(jagsfit_antidep_sens[[1]]) # adjust1, q=0.25
 summary(jagsfit_antidep_sens[[2]]) # adjust2, q=0.25

@@ -1,7 +1,7 @@
 rrms_forestplot <- function(jagsfit.nma=jagsfit_rrms_NMA){
   x1 <- data.frame(summary(jagsfit.nma[[1]],expo=F),method='unadjusted') 
-  x2 <- data.frame(summary(jagsfit.nma[[2]],expo=F),method='adjust 1') 
-  x3 <- data.frame(summary(jagsfit.nma[[3]],expo=F),method='adjust 2') 
+  x2 <- data.frame(summary(jagsfit.nma[[2]],expo=F),method='bias-adjusted 1') 
+  x3 <- data.frame(summary(jagsfit.nma[[3]],expo=F),method='bias-adjusted 2') 
   
   x<- rbind(x1,x2,x3)
   drug.lab <- jagsfit.nma[[1]]$trt.key$trt.ini
@@ -22,7 +22,7 @@ rrms_forestplot <- function(jagsfit.nma=jagsfit_rrms_NMA){
                   ylim=c(1,20),
                   rows=c(15:13,10:8,5:3), # the position of each CrI !! should start from up (high num) to down
                   psize=1, # the size of the circle of point estimate 
-                  header=c("Treatment and method of synthesis","Estimate OR [95% CrI]"),#,,
+                  header=c("Treatment and method of synthesis","OR [95% CrI]"),#,,
                   cex.axis=1.5,
                   xlab="Odds Ratio (OR)")
   

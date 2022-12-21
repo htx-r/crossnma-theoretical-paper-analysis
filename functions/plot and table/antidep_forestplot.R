@@ -1,3 +1,5 @@
+library(crossnma)
+library(ggplot2)
 antidep_forestplot <- function(jagsfit_antidep_main, antidep){
   jagsfit1 <- jagsfit_antidep_main[[1]]
   jagsfit2 <- jagsfit_antidep_main[[2]]
@@ -15,17 +17,17 @@ antidep_forestplot <- function(jagsfit_antidep_main, antidep){
   sum2 <-summary(jagsfit2,expo=T)
   sum2_1 <- as.data.frame(sum2[2:22,])
   sum2_1$drug <- sort(unique(as.character(antidep$agent)))[-16]
-  sum2_1$method <- "adjust1"
+  sum2_1$method <- "bias-adjusted 1"
   
   # adjust2
   sum3 <-summary(jagsfit3,expo=T)
   sum3_1 <- as.data.frame(sum3[2:22,])
   sum3_1$drug <- sort(unique(as.character(antidep$agent)))[-16]
-  sum3_1$method <- "adjust2"
+  sum3_1$method <- "bias-adjusted 2"
   
   # gather them in one dataframe
   plotdata <- rbind.data.frame(sum1_1,sum2_1,sum3_1)
-  plotdata$method <- factor(plotdata$method, levels = c("adjust2","adjust1","unadjusted"))
+  plotdata$method <- factor(plotdata$method, levels = c("bias-adjusted 2","bias-adjusted 1","unadjusted"))
   
   # 
   theme_set(

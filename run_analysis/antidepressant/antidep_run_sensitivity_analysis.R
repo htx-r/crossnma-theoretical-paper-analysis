@@ -7,7 +7,7 @@
 
 
 #-------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#devtools::install_github("htx-r/crossnma",force = TRUE)
 library(crossnma)
 
 #-------- data --------#
@@ -26,18 +26,18 @@ n.chains=2
 # jags model: code+data
 mod_adjust1_sens <- crossnma.model(prt.data=NULL,
                                    std.data=gris,
-                                   trt=c('drug'),
-                                   study=c('study'),
-                                   outcome=c('r'),
-                                   n='n',
-                                   design=c('design'),
+                                   trt=drug,
+                                   study=study,
+                                   outcome=r,
+                                   n=n,
+                                   design=design,
                                    reference='Plac',
                                    trt.effect='random',
                                    #---------- bias adjustment ----------
                                    method.bias='adjust1',
-                                   bias=c('rob'),
-                                   unfav=c("unfav"),
-                                   bias.group = "bias.group",
+                                   bias=rob,
+                                   unfav=unfav,
+                                   bias.group = bias.group,
                                    bias.type='add',
                                    bias.effect='random',
                                    prior =list(pi.high.rct="dbeta(10,1)",
@@ -45,7 +45,7 @@ mod_adjust1_sens <- crossnma.model(prt.data=NULL,
 
 
 # run jags
-fit_adjust1_sens <- crossnma.run(model=mod_adjust1_sens,
+fit_adjust1_sens <- crossnma(mod_adjust1_sens,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
@@ -53,22 +53,22 @@ fit_adjust1_sens <- crossnma.run(model=mod_adjust1_sens,
                                  n.chains=n.chains,
                                  monitor="g.act")
 
-#** 3. bias-adjust2 with Beta(1,10) and Beta(10,1)
+#** 2. bias-adjust2 with Beta(1,10) and Beta(10,1)
 # jags model: code+data
 mod_adjust2_sens <- crossnma.model(prt.data=NULL,
                                    std.data=gris,
-                                   trt=c('drug'),
-                                   study=c('study'),
-                                   outcome=c('r'),
-                                   n='n',
-                                   design=c('design'),
+                                   trt=drug,
+                                   study=study,
+                                   outcome=r,
+                                   n=n,
+                                   design=design,
                                    reference='Plac',
                                    trt.effect='random',
                                    #---------- bias adjustment ----------
                                    method.bias='adjust2',
-                                   bias=c('rob'),
-                                   unfav=c("unfav"),
-                                   bias.group = "bias.group",
+                                   bias=rob,
+                                   unfav=unfav,
+                                   bias.group = bias.group,
                                    # bias.type='add',
                                    bias.effect='random',
                                    prior =list(pi.high.rct="dbeta(10,1)",

@@ -43,6 +43,7 @@ mod_adjust1_age <- crossnma.model(prt.data=myprt.data,
                                               pi.low.rct="dbeta(1,100)"),
                                   #----------  meta-regression ----------
                                   covariate = 'age',
+                                  cov.ref=0,
                                   split.regcoef = F,
                                   regb.effect='common',
                                   regw.effect='common'

@@ -56,7 +56,7 @@ rrms_ORvsAge <- function(jagsfit_rrms_adjust1_NMR_age, add.cri=T){
           legend.key.height = unit(1, 'cm'), #change legend key height
           legend.key.width = unit(1, 'cm'), #change legend key width
           legend.title = element_text(size=14), #change legend title font size
-          legend.text = element_text(size=10), #change legend text font size
+          legend.text = element_text(size=14), #change legend text font size
           # add borders to the panel
           panel.border = element_rect(colour = "grey40", fill=NA, size=1.5)
           )+
