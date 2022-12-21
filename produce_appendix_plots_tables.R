@@ -1,13 +1,16 @@
-#-------- load the libray --------#
+# -------- install required libraries --------#
 #install.packages("crossnma")
 #install.packages("ggplot2")
 #install.packages("dplyr")
-#install.packages("BUGSnet")
+#install.packages("remotes")
+#remotes::install_github("audrey-b/BUGSnet")
 
+# -------- load libraries --------#
 library(crossnma)
 library(ggplot2) # appx fig1, 2,3
 library(dplyr) # appx fig1, 2,3
 library(BUGSnet) # for appx tab1,2,3
+
 #-------- data --------# (needed to create Appendix table 1,2,3)
 myprt.data <- read.csv("data/RRMS/final data/rrms_final_IPD") 
 mystd.data <- read.csv("data/RRMS/final data/rrms_final_AD") 
@@ -76,10 +79,9 @@ network.char$comparison
 
 # Appendix Table 4, 5, 6, 7
 heatplot(jagsfit_rrms_NMA[[1]],exp = T)
-heatplot(jagsfit.prior[[10]],exp = T,order = c("Placebo",
-                                                      "Dimethyl fumarate",
-                                                      "Glatiramer acetate",
-                                                      "Natalizumab"))
+heatplot(jagsfit.prior[[10]],exp = T,
+         order = c("Placebo", "Dimethyl fumarate",
+                   "Glatiramer acetate", "Natalizumab"))
 heatplot(jagsfit_rrms_NMA[[2]],exp = T)
 heatplot(jagsfit_rrms_NMA[[3]],exp = T)
 
@@ -91,6 +93,4 @@ conv.tab2 <-rrms_conv_stat_tab(jagsfit.prior[[10]], method = "prior")
 conv.tab3 <-rrms_conv_stat_tab(jagsfit_rrms_NMA[[2]], method = "bias-adjusted 1")
 conv.tab4 <-rrms_conv_stat_tab(jagsfit_rrms_NMA[[3]], method = "bias-adjusted 2")
 
-View(rbind(conv.tab1,conv.tab2,conv.tab3, conv.tab4))
-
-
+rbind(conv.tab1, conv.tab2, conv.tab3, conv.tab4)
