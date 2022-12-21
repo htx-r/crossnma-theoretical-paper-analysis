@@ -1,4 +1,2 @@
-# crossnma-theoretical-paper-analysis
-# I made changes in the code in 22 August 
-# 1. to adapt the code for the new changes we (Schwarzer and I) made on the crossnma functions 
-# 2. to add the code that compute the DIC as the reviewers asked
+# These are collections of functions  to run the analysis and to produce the figures presented in the article entitled: Synthesizing cross-design evidence and cross-format data using network meta-regression.  Hamza et al. 2022. DOI:
+https://doi.org/10.48550/arXiv.2203.06350 
