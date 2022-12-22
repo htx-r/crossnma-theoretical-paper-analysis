@@ -4,7 +4,7 @@
 # This file fits NMR model to RRMS using age as a covaraite. we use bias-adjust method to adjust for biases
 
 # -------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#install.packages("crossnma")
 library(crossnma)
 
 #-------- data --------#

@@ -8,7 +8,7 @@
 # This model is fitted repeatedly with different downweight values (w) of NRS posteriors to the RCT model
 
 #-------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#install.packages("crossnma")
 library(crossnma)
 
 #-------- data --------#

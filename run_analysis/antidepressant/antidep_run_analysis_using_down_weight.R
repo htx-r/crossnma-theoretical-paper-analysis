@@ -9,7 +9,7 @@
 # 4. bias-adjust2 with q=0.8  "Additional analysis with q"
 
 #-------- load the libray --------#
-#devtools::install_github("htx-r/crossnma",force = TRUE)
+#install.packages("crossnma")
 library(crossnma)
 
 #-------- data --------#

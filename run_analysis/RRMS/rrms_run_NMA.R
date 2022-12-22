@@ -8,7 +8,7 @@
 # 3. bias-adjust2 
 
 #-------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#install.packages("crossnma")
 library(crossnma)
 
 #-------- data --------#
