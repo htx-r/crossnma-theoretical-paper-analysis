@@ -23,8 +23,7 @@ n.chains=2
 
 #** 2. bias-adjust1 with Beta(1,20) and Beta(20,1)
 # jags model: code+data
-mod_adjust1_main <- crossnma.model(prt.data=NULL,
-                                   std.data=gris,
+mod_adjust1_main <- crossnma.model(std.data=gris,
                                    trt=drug,
                                    study=study,
                                    outcome=r,
@@ -46,16 +45,15 @@ mod_adjust1_main <- crossnma.model(prt.data=NULL,
 # run jags
 fit_adjust1_main_R <- crossnma(mod_adjust1_main,
                                n.adapt = n.adapt,
-                                 n.iter=n.iter,
-                                 n.burnin = n.burnin,
-                                 thin=n.thin,
-                                 n.chains=n.chains,
-                                 monitor=c("g.act","R"))
+                               n.iter=n.iter,
+                               n.burnin = n.burnin,
+                               thin=thin,
+                               n.chains=n.chains,
+                               monitor=c("g.act","R"))
 
 #** 3. bias-adjust2 with Beta(1,20) and Beta(20,1)
 # jags model: code+data
-mod_adjust2_main <- crossnma.model(prt.data=NULL,
-                                   std.data=gris,
+mod_adjust2_main <- crossnma.model(std.data=gris,
                                    trt=drug,
                                    study=study,
                                    outcome=r,
@@ -78,14 +76,14 @@ mod_adjust2_main <- crossnma.model(prt.data=NULL,
 # run jags
 fit_adjust2_main_pi <- crossnma(mod_adjust2_main,
                                 n.adapt = n.adapt,
-                                 n.iter=n.iter,
-                                 n.burnin = n.burnin,
-                                 thin=n.thin,
-                                 n.chains=n.chains,
-                                 monitor=c("g.act","pi"))
+                                n.iter=n.iter,
+                                n.burnin = n.burnin,
+                                thin=thin,
+                                n.chains=n.chains,
+                                monitor=c("g.act","pi"))
 
 
-# Reviwer 2 suggested to check the agreement between ( Will the study that is deemed at high/low be assumed as so in the analysis)
+# Reviewer 2 suggested to check the agreement between ( Will the study that is deemed at high/low be assumed as so in the analysis)
   # our judgment about the RoB (high/low) and 
   # the estimated bias indicator (R) (adjust1) or the bias probablity (pi) (adjust2)
 

@@ -60,8 +60,7 @@ netgraph(mod_rct,
 #-------- data --------#
 gris <- read.csv("data/antidepressant/final data/antidepressant_for_main_analysis")
 
-mod_antidep <- crossnma.model(prt.data=NULL,
-                              std.data=gris,
+mod_antidep <- crossnma.model(std.data=gris,
                               trt=drug,
                               study=study,
                               outcome=r,

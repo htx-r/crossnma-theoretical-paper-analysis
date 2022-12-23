@@ -24,8 +24,7 @@ n.chains=2
 
 #** 1. bias-adjust1 with Beta(1,10) and Beta(10,1)
 # jags model: code+data
-mod_adjust1_sens <- crossnma.model(prt.data=NULL,
-                                   std.data=gris,
+mod_adjust1_sens <- crossnma.model(std.data=gris,
                                    trt=drug,
                                    study=study,
                                    outcome=r,
@@ -46,17 +45,16 @@ mod_adjust1_sens <- crossnma.model(prt.data=NULL,
 
 # run jags
 fit_adjust1_sens <- crossnma(mod_adjust1_sens,
-                                 n.adapt = n.adapt,
-                                 n.iter=n.iter,
-                                 n.burnin = n.burnin,
-                                 thin=thin,
-                                 n.chains=n.chains,
-                                 monitor="g.act")
+                             n.adapt = n.adapt,
+                             n.iter=n.iter,
+                             n.burnin = n.burnin,
+                             thin=thin,
+                             n.chains=n.chains,
+                             monitor="g.act")
 
 #** 2. bias-adjust2 with Beta(1,10) and Beta(10,1)
 # jags model: code+data
-mod_adjust2_sens <- crossnma.model(prt.data=NULL,
-                                   std.data=gris,
+mod_adjust2_sens <- crossnma.model(std.data=gris,
                                    trt=drug,
                                    study=study,
                                    outcome=r,
@@ -78,18 +76,13 @@ mod_adjust2_sens <- crossnma.model(prt.data=NULL,
 
 # run jags
 fit_adjust2_sens <- crossnma(mod_adjust2_sens,
-                                 n.adapt = n.adapt,
-                                 n.iter=n.iter,
-                                 n.burnin = n.burnin,
-                                 thin=thin,
-                                 n.chains=n.chains,
-                                 monitor="g.act")
+                             n.adapt = n.adapt,
+                             n.iter=n.iter,
+                             n.burnin = n.burnin,
+                             thin=thin,
+                             n.chains=n.chains,
+                             monitor="g.act")
 
 #== SAVE output
 jagsfit_antidep_sens <- list(fit_adjust1_sens,fit_adjust2_sens)
 save(jagsfit_antidep_sens,file = "output/antidepressant/JAGS/jagsfit_antidep_sens.RData")
-
-
-
-
-
