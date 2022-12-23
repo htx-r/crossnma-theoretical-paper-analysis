@@ -10,10 +10,6 @@ library(metafor) # for fig2: forest plot
 library(dplyr) # for fig2
 library(ggplot2) # fig3 and fig4
 
-#-------- data --------# (needed to create Appendix table 1,2,3)
-myprt.data <- read.csv("data/RRMS/final data/rrms_final_IPD") 
-mystd.data <- read.csv("data/RRMS/final data/rrms_final_AD") 
-
 #-------- load JAGS output --------#
 
 #** RRMS

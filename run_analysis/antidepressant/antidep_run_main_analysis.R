@@ -19,9 +19,6 @@ n.iter=100000
 n.burnin = 40000
 thin=1
 n.chains=2
-n.adapt = 20
-n.iter=100
-n.burnin = 40
 
 #-------- Main analysis --------#
 source("functions/JAGSmodels/antidep_jags_add_dic.R") # JAGS models with deviance
