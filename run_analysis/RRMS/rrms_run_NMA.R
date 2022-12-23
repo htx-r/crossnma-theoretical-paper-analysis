@@ -26,20 +26,17 @@ n.chains=2
 
 #** 1. unadjusted 
 # jags model: code+data
-mod_unadjust <- crossnma.model(prt.data=myprt.data,
-                                 std.data=mystd.data,
-                                 trt='treat',
-                                 study='study',
-                                 outcome='r',
-                                 n='n',
-                                 design='design',
-                                 reference='Placebo',
-                                 trt.effect='common',
+mod_unadjust <- crossnma.model(trt=treat,study=study,
+                               outcome=r,n=n,design=design,
+                               prt.data=myprt.data,
+                               std.data=mystd.data,
+                               reference='Placebo',
+                               trt.effect='common',
                                  method.bias = 'naive'
                                  )
 
 # run jags
-fit_unadjust <- crossnma.run(model=mod_unadjust,
+fit_unadjust <- crossnma(mod_unadjust,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
@@ -50,28 +47,25 @@ fit_unadjust <- crossnma.run(model=mod_unadjust,
 #** 2. bias-adjust1 
 myprt.data$design <- "rct" # I want to specify for the RCT at high RoB and the unique NRS the same prior of probability of bias (pi)
 # jags model: code+data
-mod_adjust1 <- crossnma.model(prt.data=myprt.data,
-                                 std.data=mystd.data,
-                                 trt='treat',
-                                 study='study',
-                                 outcome='r',
-                                 n='n',
-                                 design='design',
-                                 reference='Placebo',
-                                 trt.effect='common',
-                                 #---------- bias adjustment ----------
-                                 method.bias='adjust1',
-                                 bias='bias',
-                                 bias.type='add',
-                                 bias.effect='common',
-                                 unfav="unfav",
-                                 bias.group="bias.group",
+mod_adjust1 <- crossnma.model(trt=treat,study=study,
+                              outcome=r,n=n,design=design,
+                              prt.data=myprt.data,
+                              std.data=mystd.data,
+                              reference='Placebo',
+                              trt.effect='common',
+                              #---------- bias adjustment ----------
+                              method.bias='adjust1',
+                              bias=bias,
+                              bias.type='add',
+                              bias.effect='common',
+                              unfav=unfav,
+                              bias.group=bias.group,
                                  prior =list(pi.high.rct="dbeta(100,1)",
                                           pi.low.rct="dbeta(1,100)")
                                  )
 
 # run jags
-fit_adjust1 <- crossnma.run(model=mod_adjust1,
+fit_adjust1 <- crossnma(mod_adjust1,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
@@ -79,27 +73,25 @@ fit_adjust1 <- crossnma.run(model=mod_adjust1,
                                  n.chains=n.chains,
                                  monitor="LOR")
 #** 3. bias-adjust2 
-mod_adjust2 <- crossnma.model(prt.data=myprt.data,
-                                 std.data=mystd.data,
-                                 trt='treat',
-                                 study='study',
-                                 outcome='r',
-                                 n='n',
-                                 design='design',
-                                 reference='Placebo',
-                                 trt.effect='common',
-                                 #---------- bias adjustment ----------
-                                 method.bias='adjust2',
-                                 bias='bias',
-                                 bias.effect='common',
-                                 unfav="unfav",
-                                 bias.group="bias.group",
+mod_adjust2 <- crossnma.model(trt=treat,study=study,
+                              outcome=r,n=n,design=design,
+                              prt.data=myprt.data,
+                              std.data=mystd.data,
+                              reference='Placebo',
+                              trt.effect='common',
+                              #---------- bias adjustment ----------
+                              method.bias='adjust2',
+                              bias=bias,
+                              bias.type='add',
+                              bias.effect='common',
+                              unfav=unfav,
+                              bias.group=bias.group,
                                  prior =list(pi.high.rct="dbeta(100,1)",
                                           pi.low.rct="dbeta(1,100)")
                                  )
 
 # run jags
-fit_adjust2 <- crossnma.run(model=mod_adjust2,
+fit_adjust2 <- crossnma(mod_adjust2,
                          n.adapt = n.adapt,
                          n.iter=n.iter,
                          n.burnin = n.burnin,
@@ -109,20 +101,17 @@ fit_adjust2 <- crossnma.run(model=mod_adjust2,
 
 #** 4. unadjusted with only RCT
 # jags model: code+data
-mod_unadjust <- crossnma.model(prt.data=myprt.data,
+mod_unadjust <- crossnma.model(trt=treat,study=study,
+                               outcome=r,n=n,design=design,
+                               prt.data=myprt.data,
                                std.data=mystd.data,
-                               trt='treat',
-                               study='study',
-                               outcome='r',
-                               n='n',
-                               design='design',
                                reference='Placebo',
                                trt.effect='common',
                                method.bias = 'naive'
-)
+                               )
 
 # run jags
-fit_unadjust <- crossnma.run(model=mod_unadjust,
+fit_unadjust <- crossnma(mod_unadjust,
                              n.adapt = n.adapt,
                              n.iter=n.iter,
                              n.burnin = n.burnin,

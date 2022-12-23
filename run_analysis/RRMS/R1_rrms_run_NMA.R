@@ -46,7 +46,7 @@ mod_unadjust$data$arm <- extra_data$arm
 mod_unadjust$data$stnd <-extra_data$stnd
 
 # run jags
-fit_unadjust <- crossnma.run(model=mod_unadjust,
+fit_unadjust <- crossnma(mod_unadjust,
                              n.adapt = n.adapt,
                              n.iter=n.iter,
                              n.burnin = n.burnin,
@@ -54,8 +54,7 @@ fit_unadjust <- crossnma.run(model=mod_unadjust,
                              n.chains=n.chains,
                              monitor=c("LOR","totresdev.ipd","totresdev.ad","theta"))
 
-totresdev.ipd.unadj <- mean(c(fit_unadjust$samples[[1]][,"totresdev.ipd"],fit_unadjust$samples[[2]][,"totresdev.ipd"])) # 3351866 # 1473048
-totresdev.ipd.unadj
+
 #** 2. use NRS as a prior
 # jags model: code+data
 mod_prior <- crossnma.model(trt=treat,study=study,
@@ -72,15 +71,14 @@ mod_prior$data$n.ipd <-extra_data$n.ipd
 mod_prior$data$arm <- extra_data$arm
 mod_prior$data$stnd <-extra_data$stnd
 # run jags
-fit_prior <- crossnma.run(model=mod_prior,
+fit_prior <- crossnma(mod_prior,
                              n.adapt = n.adapt,
                              n.iter=n.iter,
                              n.burnin = n.burnin,
                              thin=thin,
                              n.chains=n.chains,
                              monitor=c("LOR","totresdev.ipd","totresdev.ad","theta"))
-totresdev.ipd.prior <- mean(c(fit_prior$samples[[1]][,"totresdev.ipd"],fit_prior$samples[[2]][,"totresdev.ipd"])) # 3351866 # 1473048
-totresdev.ipd.prior
+
 #** 3. bias-adjust1 
 myprt.data$design <- "rct" # I want to specify for the RCT at high RoB and the unique NRS the same prior of probability of bias (pi)
 # jags model: code+data
@@ -107,14 +105,13 @@ mod_adjust1$data$n.ipd <-extra_data$n.ipd
 mod_adjust1$data$arm <- extra_data$arm
 mod_adjust1$data$stnd <-extra_data$stnd
 # run jags
-fit_adjust1 <- crossnma.run(model=mod_adjust1,
+fit_adjust1 <- crossnma(mod_adjust1,
                             n.adapt = n.adapt,
                             n.iter=n.iter,
                             n.burnin = n.burnin,
                             thin=thin,
                             n.chains=n.chains,
                             monitor=c("LOR","totresdev.ipd","totresdev.ad","theta"))
-totresdev.ipd.adjust1 <- mean(c(fit_adjust1$samples[[1]][,"totresdev.ipd"],fit_adjust1$samples[[2]][,"totresdev.ipd"])) # 3351866 # 1473048
 
 #** 4. bias-adjust2 
 mod_adjust2 <- crossnma.model(trt=treat,study=study,
@@ -139,7 +136,7 @@ mod_adjust2$data$n.ipd <-extra_data$n.ipd
 mod_adjust2$data$arm <- extra_data$arm
 mod_adjust2$data$stnd <-extra_data$stnd
 # run jags
-fit_adjust2 <- crossnma.run(model=mod_adjust2,
+fit_adjust2 <- crossnma(mod_adjust2,
                             n.adapt = n.adapt,
                             n.iter=n.iter,
                             n.burnin = n.burnin,

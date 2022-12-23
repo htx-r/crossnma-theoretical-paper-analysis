@@ -1,5 +1,4 @@
-#  Cross-Network meta-analysis of antidepressants 
-# ** Main analysis - monitor R and compare estimated R to **
+#  Cross-Network meta-analysis of antidepressants ** Main analysis **
 #  Authors: Tasnim Hamza and Georgia Salanti
 
 # This file use antidepressnats to run these analysis
@@ -8,7 +7,7 @@
 # 3. bias-adjust2 with Beta(1,20) and Beta(20,1) to model bias probability "Main analysis"
 
 #-------- load the libray --------#
-devtools::install_github("htx-r/crossnma",force = TRUE)
+#install.packages("crossnma")
 library(crossnma)
 
 #-------- data --------#
@@ -20,9 +19,35 @@ n.iter=100000
 n.burnin = 40000
 thin=1
 n.chains=2
+
+#** 1. unadjusted 
+# jags model: code+data
+mod_unadjust_tau1 <- crossnma.model(prt.data=NULL,
+                               std.data=gris,
+                               trt=drug,
+                               study=study,
+                               outcome=r,
+                               n=n,
+                               design=design,
+                               reference="Plac",
+                               trt.effect="random",
+                               method.bias = "naive",
+                               prior=list(tau.trt="dunif(0,5)")
+                               )
+
+
+# run jags
+fit_unadjust_tau1 <- crossnma(mod_unadjust_tau1,
+                             n.adapt = n.adapt,
+                             n.iter=n.iter,
+                             n.burnin = n.burnin,
+                             thin=thin,
+                             n.chains=n.chains
+                             )
+summary(fit_unadjust_tau1) # 0.209, (0.168, 0.250)
 #** 2. bias-adjust1 with Beta(1,20) and Beta(20,1)
 # jags model: code+data
-mod_adjust1_main <- crossnma.model(prt.data=NULL,
+mod_adjust1_tau1 <- crossnma.model(prt.data=NULL,
                                    std.data=gris,
                                    trt=drug,
                                    study=study,
@@ -39,21 +64,23 @@ mod_adjust1_main <- crossnma.model(prt.data=NULL,
                                    bias.type='add',
                                    bias.effect='random',
                                    prior =list(pi.high.rct="dbeta(20,1)",
-                                               pi.low.rct="dbeta(1,20)"))
+                                               pi.low.rct="dbeta(1,20)",
+                                               tau.trt="dunif(0,5)"))
 
-#mod_adjust1_main$jagsmodel <- antidep_jags_adj1_dic
+
 # run jags
-fit_adjust1_main_R <- crossnma.run(model=mod_adjust1_main,
+fit_adjust1_tau1 <- crossnma(mod_adjust1_tau1,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
                                  thin=thin,
-                                 n.chains=n.chains,
-                                 monitor=c("g.act","R"))
+                                 n.chains=n.chains
+                                 )
 
+summary(fit_adjust1_tau1) # tau.trt: 0.167, (0.087, 0.228) 
 #** 3. bias-adjust2 with Beta(1,20) and Beta(20,1)
 # jags model: code+data
-mod_adjust2_main <- crossnma.model(prt.data=NULL,
+mod_adjust2_tau1 <- crossnma.model(prt.data=NULL,
                                    std.data=gris,
                                    trt=drug,
                                    study=study,
@@ -70,42 +97,22 @@ mod_adjust2_main <- crossnma.model(prt.data=NULL,
                                    bias.type='add',
                                    bias.effect='random',
                                    prior =list(pi.high.rct="dbeta(20,1)",
-                                               pi.low.rct="dbeta(1,20)")
-)
+                                               pi.low.rct="dbeta(1,20)",
+                                               tau.trt="dunif(0,5)"
+                                               ))
 
-#mod_adjust2_main$jagsmodel <- antidep_jags_adj2_dic
 # run jags
-fit_adjust2_main_pi <- crossnma.run(model=mod_adjust2_main,
+fit_adjust2_tau1 <- crossnma(mod_adjust2_tau1,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
                                  thin=thin,
                                  n.chains=n.chains,
-                                 monitor=c("g.act","pi"))
-
-
-# Reviwer 2 suggested to check the agreement between ( Will the study that is deemed at high/low be assumed as so in the analysis)
-  # our judgment about the RoB (high/low) and 
-  # the estimated bias indicator (R) (adjust1) or the bias probablity (pi) (adjust2)
-
-# adjust1
-sum_adjust1 <- summary(fit_adjust1_main_R,exp=FALSE)
-R_study <- sum_adjust1[startsWith(rownames(sum_adjust1),"R"),"Mean"]
-R_bias_mat <- cbind(round(R_study),mod_adjust1_main$data$bias_index )
-
-std_high <- R_bias_mat[R_bias_mat[,2]==1,]
-nrow(std_high) # Num of high RoB
-nrow(std_high[std_high[,1]==1,]) # all high RoB studies are given R=1 
-std_low <- R_bias_mat[R_bias_mat[,2]==2,]
-nrow(std_low) # Num of low RoB
-nrow(std_low[std_low[,1]==0,]) # all low RoB studies are given R=0 
-
-# adjust2
-sum_adjust2 <- summary(fit_adjust2_main_pi,exp=FALSE)
-pi_designRoB <- sum_adjust2[startsWith(rownames(sum_adjust2),"pi"),"Mean"]
-# pi[1]= 0.94306678      
-# pi[2]=0.09472230
-
+                                 monitor=c("g.act")
+                                 )
+summary(fit_adjust2_tau1) # 0.212, (0.144,0.289) 
 #== SAVE output
-jagsfit_antidep_main_R_pi <- list(fit_adjust1_main_R,fit_adjust2_main_pi)
-save(jagsfit_antidep_main_R_pi,file = "output/antidepressant/JAGS/jagsfit_antidep_main_R_pi.RData")
+jagsfit_antidep_sens_tau1 <- list(fit_unadjust_tau1,fit_adjust1_tau1,fit_adjust2_tau1)
+save(jagsfit_antidep_sens_tau1,file = "output/antidepressant/JAGS/jagsfit_antidep_sens_tau1.RData")
+
+

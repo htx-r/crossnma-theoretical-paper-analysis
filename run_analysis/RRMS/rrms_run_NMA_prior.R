@@ -28,13 +28,10 @@ w <- seq(0,1,l=11)[-1]
 jagsfit.prior <- list()
 for (i in 1:length(w)) {
   # jags model: code+data
-  mod.prior <- crossnma.model(prt.data=myprt.data,
+  mod.prior <- crossnma.model(trt=treat,study=study,
+                              outcome=r,n=n,design=design,
+                              prt.data=myprt.data,
                               std.data=mystd.data,
-                              trt='treat',
-                              study='study',
-                              outcome='r',
-                              n='n',
-                              design='design',
                               reference='Natalizumab',
                               trt.effect='common',
                               #---------- bias adjustment ----------
@@ -49,7 +46,7 @@ for (i in 1:length(w)) {
                                            n.chains=n.chains)
                               )
   
-  jagsfit.prior[[i]] <- crossnma.run(model=mod.prior,
+  jagsfit.prior[[i]] <- crossnma(mod.prior,
                                      n.adapt = n.adapt,
                                      n.iter=n.iter,
                                      n.burnin = n.burnin,

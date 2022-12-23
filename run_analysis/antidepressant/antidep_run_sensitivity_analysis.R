@@ -77,7 +77,7 @@ mod_adjust2_sens <- crossnma.model(prt.data=NULL,
 
 
 # run jags
-fit_adjust2_sens <- crossnma.run(model=mod_adjust2_sens,
+fit_adjust2_sens <- crossnma(mod_adjust2_sens,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,

@@ -1,3 +1,4 @@
+#install.packages("crossnma")
 library(crossnma)
 library(ggplot2)
 antidep_forestplot <- function(jagsfit_antidep_main, antidep){

@@ -19,7 +19,7 @@ gris <- read.csv("data/antidepressant/final data/antidepressant_for_main_analysi
 n.adapt = 2000
 n.iter=100000
 n.burnin = 40000
-thin=1
+n.thin=1
 n.chains=2
 
 #-------- Analysis using the down_weight factor q --------#
@@ -49,7 +49,7 @@ fit_adjust1_q1 <- crossnma(mod_adjust1_q1,
                                  n.adapt = n.adapt,
                                  n.iter=n.iter,
                                  n.burnin = n.burnin,
-                                 thin=thin,
+                                 thin=n.thin,
                                  n.chains=n.chains,
                                  monitor="g.act")
 
