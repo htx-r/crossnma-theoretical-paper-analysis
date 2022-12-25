@@ -59,7 +59,6 @@ netgraph(mod_rct,
 # b. antidepressant
 #-------- data --------#
 gris <- read.csv("data/antidepressant/final data/antidepressant_for_main_analysis")
-
 mod_antidep <- crossnma.model(std.data=gris,
                               trt=drug,
                               study=study,
@@ -80,8 +79,7 @@ netgraph(mod_antidep,
 load("output/RRMS/JAGS/jagsfit_rrms_NMA_dic.RData") # 
 source("functions/plot and table/rrms_forestplot_with_study_effect.R")
 rrms_forestplot_with_study_effect(jagsfit_rrms_NMA_dic)
-#source("functions/plot and table/rrms_forestplot.R")
-#rrms_forestplot(jagsfit.nma=jagsfit_rrms_NMA)
+
 
 # Figure 3
 source("functions/plot and table/rrms_ORvsAge.R")
@@ -89,7 +87,6 @@ rrms_ORvsAge(jagsfit_rrms_adjust1_NMR_age, add.cri=T)
 
 # Figure 4
 source("functions/plot and table/antidep_forestplot.R")
-#antidep <- read.csv("data/antidepressant/raw data/antidepressant")# to get drug names from the raw data
 antidep_forestplot(jagsfit_antidep_main_R, gris)
 
 # Table 3

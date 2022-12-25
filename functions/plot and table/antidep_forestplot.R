@@ -1,29 +1,29 @@
 #install.packages("crossnma")
 library(crossnma)
 library(ggplot2)
-antidep_forestplot <- function(jagsfit_antidep_main, antidep){
-  jagsfit1 <- jagsfit_antidep_main[[1]]
-  jagsfit2 <- jagsfit_antidep_main[[2]]
-  jagsfit3 <- jagsfit_antidep_main[[3]]
+antidep_forestplot <- function(jagsfit_antidep_main_R, gris){
+  jagsfit1 <- jagsfit_antidep_main_R[[1]]
+  jagsfit2 <- jagsfit_antidep_main_R[[2]]
+  jagsfit3 <- jagsfit_antidep_main_R[[3]]
 
   # Data to plot
   
   # unadjust 
   sum1 <-summary(jagsfit1,expo=T)
   sum1_1 <- as.data.frame(sum1[-c(1,nrow(sum1)),])
-  sum1_1$drug <- sort(unique(as.character(antidep$agent)))[-16]
+  sum1_1$drug <- sort(unique(as.character(gris$drug)))[-16]
   sum1_1$method <- "unadjusted"
   
   # adjust1
   sum2 <-summary(jagsfit2,expo=T)
   sum2_1 <- as.data.frame(sum2[2:22,])
-  sum2_1$drug <- sort(unique(as.character(antidep$agent)))[-16]
+  sum2_1$drug <- sort(unique(as.character(gris$drug)))[-16]
   sum2_1$method <- "bias-adjusted 1"
   
   # adjust2
   sum3 <-summary(jagsfit3,expo=T)
   sum3_1 <- as.data.frame(sum3[2:22,])
-  sum3_1$drug <- sort(unique(as.character(antidep$agent)))[-16]
+  sum3_1$drug <- sort(unique(as.character(gris$drug)))[-16]
   sum3_1$method <- "bias-adjusted 2"
   
   # gather them in one dataframe

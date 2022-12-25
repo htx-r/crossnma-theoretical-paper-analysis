@@ -60,13 +60,12 @@ lines(as.vector(jagsfit_antidep_main_R[[3]]$samples[[1]][,'g']),col=2)
 # g.act (mean bias for active-active comparison, sponsored)
 plot(as.vector(jagsfit_antidep_main_R[[3]]$samples[[2]][,'g.act']), type = "l",
      ylab="", xlab="",las=1, main="Traceplot of g.act (adjust2)")
-lines(as.vector(jagsfit_antidep_main[[3]]$samples[[1]][,'g.act']),col=2)
+lines(as.vector(jagsfit_antidep_main_R[[3]]$samples[[1]][,'g.act']),col=2)
 
 # Appendix Figure 7
 source("functions/plot and table/antidep_forestplot.R")
-antidep <- read.csv("data/antidepressant/raw data/antidepressant")# to get drug names from the raw data
 jagsfit_antidep_unadjust_sens <- list(jagsfit_antidep_main_R[[1]],jagsfit_antidep_sens[[1]],jagsfit_antidep_sens[[2]])
-antidep_forestplot(jagsfit_antidep_unadjust_sens, antidep)
+antidep_forestplot(jagsfit_antidep_unadjust_sens, gris)
 
 #-------- Appendix Tables --------#
 
