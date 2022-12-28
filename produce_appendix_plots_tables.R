@@ -64,6 +64,7 @@ lines(as.vector(jagsfit_antidep_main_R[[3]]$samples[[1]][,'g.act']),col=2)
 
 # Appendix Figure 7
 source("functions/plot and table/antidep_forestplot.R")
+gris <- read.csv("data/antidepressant/final data/antidepressant_for_main_analysis")
 jagsfit_antidep_unadjust_sens <- list(jagsfit_antidep_main_R[[1]],jagsfit_antidep_sens[[1]],jagsfit_antidep_sens[[2]])
 antidep_forestplot(jagsfit_antidep_unadjust_sens, gris)
 
