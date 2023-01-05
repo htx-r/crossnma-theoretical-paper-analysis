@@ -143,15 +143,15 @@ dic.fun(jagsfit_antidep_main_R[[1]]) # unadjusted analysis   #  DIC= 2666.473, D
 dic.fun(jagsfit_antidep_main_R[[2]]) # bias-adjsuted 1 model #  DIC= , D_res=
 dic.fun(jagsfit_antidep_main_R[[3]]) # bias-adjsuted 2 model #  DIC=  -6275.857
 
-# Calculate total residual deviance
-res.dev.unadjust.antidep <- mean(c(jagsfit_antidep_main_R[[1]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[1]]$samples[[2]][,"totresdev.ad"])) # 966.4946
-res.dev.adjust1.antidep <- mean(c(jagsfit_antidep_main_R[[2]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[2]]$samples[[2]][,"totresdev.ad"]))  # 956.4426 
-res.dev.adjust2.antidep <- mean(c(jagsfit_antidep_main_R[[3]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[3]]$samples[[2]][,"totresdev.ad"]))  # 966.4664
+## # Calculate total residual deviance
+## res.dev.unadjust.antidep <- mean(c(jagsfit_antidep_main_R[[1]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[1]]$samples[[2]][,"totresdev.ad"])) # 966.4946
+## res.dev.adjust1.antidep <- mean(c(jagsfit_antidep_main_R[[2]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[2]]$samples[[2]][,"totresdev.ad"]))  # 956.4426 
+## res.dev.adjust2.antidep <- mean(c(jagsfit_antidep_main_R[[3]]$samples[[1]][,"totresdev.ad"],jagsfit_antidep_main_R[[3]]$samples[[2]][,"totresdev.ad"]))  # 966.4664
 
-#** RRMS: Calculate DIC for 
+#** RRMS: Calculate DIC for effective number of parameters (as we run
+#**       common-effect model, pD=number of data points)
 # load JAGS output
 load("output/RRMS/JAGS/jagsfit_rrms_NMA_dic.RData") # 
-# effective number of parameters (as we run common-effect model, pD=number of data points)
 rrms_ipd <- read.csv("data/RRMS/final data/rrms_final_IPD") 
 rrms_ad <- read.csv("data/RRMS/final data/rrms_final_AD") 
 
